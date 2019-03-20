@@ -2,13 +2,13 @@ package designPatternDivision.Damage;
 
 public class PlayerDamage extends DamageModule
 {
-	public void setDamage( int damage )
-	{
-		basicDamage = damage;
-	}
+    public PlayerDamage( int damage )
+    {
+        basicDamage = damage;
+    }
 
-	public int getDamage()
-	{
-		return basicDamage;
-	}
+    public int getDamage()
+    {
+        return basicDamage;
+    }
 }

@@ -4,10 +4,11 @@ import designPatternDivision.Damage.DamageModule;
 
 public abstract class MarksmanRifleWeapon extends Weapon
 {
-	public abstract DamageModule useWeapon();
-	
-	public double getHeadshotDamageMultiplier ()
-	{
-		return 1.0 ;
-	}
+    public abstract DamageModule useWeapon();
+
+    public double getHeadshotDamageMultiplier()
+    {
+        return 1.0;
+    }
+
 }
