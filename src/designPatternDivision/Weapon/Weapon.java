@@ -1,6 +1,7 @@
 package designPatternDivision.Weapon;
 
 import designPatternDivision.Damage.DamageModule;
+import designPatternDivision.Damage.PlayerDamage;
 
 public abstract class Weapon
 {
@@ -9,15 +10,35 @@ public abstract class Weapon
     int magazineSize;
     int shotLeft;
     int burstShot;
-    DamageModule damageModule;
+    PlayerDamage playerDamage;
 
-    public abstract DamageModule useWeapon();
+    public DamageModule useWeapon()
+    {
+        playerDamage.setShotFire( getBurstShot() );
+        return playerDamage;
+    }
 
     public abstract double getHeadshotDamageMultiplier();
 
-    public void setRateOfFire( double modifiedRate )
+    public void setSingleShotDamage( int damage )
     {
-        rateOfFire *= ( 1 + modifiedRate );
+        singleShotDamage = damage;
+        setDamageModule();
+        return;
+    }
+
+    public void setWeaponInitial()
+    {
+        setRateOfFire();
+        setMagazineSize();
+        setShotLeft();
+        setDamageModule();
+        return;
+    }
+
+    public int getSingleShotDamage()
+    {
+        return singleShotDamage;
     }
 
     public int getRateOfFire()
@@ -42,9 +63,30 @@ public abstract class Weapon
         return burstShot;
     }
 
+    public void changeRateOfFire( double modifiedRate )
+    {
+        rateOfFire *= ( 1 + modifiedRate );
+    }
+
     public void reloadMagazine()
     {
         shotLeft = shotLeft == 0 ? magazineSize : magazineSize + 1;
+        return;
+    }
+
+    abstract void setRateOfFire();
+
+    abstract void setMagazineSize();
+
+    void setShotLeft()
+    {
+        shotLeft = magazineSize + 1;
+        return;
+    }
+
+    void setDamageModule()
+    {
+        playerDamage = new PlayerDamage( singleShotDamage );
         return;
     }
 }

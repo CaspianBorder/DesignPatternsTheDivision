@@ -8,19 +8,18 @@ public class LightweightM4 extends AssaultRifleWeapon
     private static final int LIGHTWEIGHT_M4_RATE_OF_FIRE = 7;
     private static final int LIGHTWEIGHT_M4_MAGAZINE_SIZE = 30;
 
-    public LightweightM4( int damage )
+    @Override
+    void setRateOfFire()
     {
         rateOfFire = LIGHTWEIGHT_M4_RATE_OF_FIRE;
-        magazineSize = LIGHTWEIGHT_M4_MAGAZINE_SIZE;
-        singleShotDamage = damage;
-        damageModule = new PlayerDamage( singleShotDamage );
-        shotLeft = magazineSize + 1;
+        return;
     }
 
     @Override
-    public DamageModule useWeapon()
+    void setMagazineSize()
     {
-        return damageModule;
+        magazineSize = LIGHTWEIGHT_M4_MAGAZINE_SIZE;
+        return;
     }
 
 }
