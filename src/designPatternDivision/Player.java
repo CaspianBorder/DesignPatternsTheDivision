@@ -4,13 +4,15 @@ import designPatternDivision.Weapon.Weapon;
 
 public class Player 
 {
+	private static final int PLAYER_INITIAL_FULL_HEALTH = 1000;
 	private static Player player ;
 	private Weapon weaponSlot1 ;
 	private Weapon weaponSlot2 ;
+	private PlayerHealthPoint healthPoint;
 	
 	private Player ()
 	{
-		
+		healthPoint = new PlayerHealthPoint( PLAYER_INITIAL_FULL_HEALTH );
 	}
 	
 	public static synchronized Player getPlayerInstance ()

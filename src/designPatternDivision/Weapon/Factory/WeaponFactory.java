@@ -1,6 +1,5 @@
 package designPatternDivision.Weapon.Factory;
 
-import designPatternDivision.Damage.PlayerDamage;
 import designPatternDivision.Weapon.Weapon;
 
 public abstract class WeaponFactory

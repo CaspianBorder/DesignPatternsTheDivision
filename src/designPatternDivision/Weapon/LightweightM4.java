@@ -1,8 +1,5 @@
 package designPatternDivision.Weapon;
 
-import designPatternDivision.Damage.DamageModule;
-import designPatternDivision.Damage.PlayerDamage;
-
 public class LightweightM4 extends AssaultRifleWeapon
 {
     private static final int LIGHTWEIGHT_M4_RATE_OF_FIRE = 7;
