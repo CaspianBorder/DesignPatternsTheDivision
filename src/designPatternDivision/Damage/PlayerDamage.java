@@ -4,14 +4,9 @@ public class PlayerDamage extends DamageModule
 {
     int shotFire;
 
-    public PlayerDamage( int damage )
+    public PlayerDamage (int inputDamage)
     {
-        basicDamage = damage;
-    }
-
-    public int getDamage()
-    {
-        return basicDamage;
+        super(inputDamage);
     }
 
     public void setShotFire( int shot )

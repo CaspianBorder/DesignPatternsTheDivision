@@ -1,8 +1,21 @@
 package designPatternDivision.Damage;
 
-public abstract class DamageModule
+public class DamageModule
 {
-	int basicDamage;
+    int basicDamage;
 
-	public abstract int getDamage();
+    public DamageModule()
+    {
+
+    }
+
+    public DamageModule( int inputDamage )
+    {
+        basicDamage = inputDamage;
+    }
+
+    public int getDamage()
+    {
+        return basicDamage;
+    }
 }

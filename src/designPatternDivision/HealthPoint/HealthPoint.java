@@ -1,4 +1,4 @@
-package designPatternDivision;
+package designPatternDivision.HealthPoint;
 
 public class HealthPoint
 {

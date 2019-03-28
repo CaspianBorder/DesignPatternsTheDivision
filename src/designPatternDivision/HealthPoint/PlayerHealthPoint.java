@@ -1,4 +1,6 @@
-package designPatternDivision;
+package designPatternDivision.HealthPoint;
+
+import designPatternDivision.HealthPoint.HealthPoint;
 
 public class PlayerHealthPoint extends HealthPoint
 {

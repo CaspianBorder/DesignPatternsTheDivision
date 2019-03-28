@@ -12,7 +12,7 @@ public abstract class Weapon
     int burstShot;
     PlayerDamage playerDamage;
 
-    public DamageModule useWeapon()
+    public PlayerDamage useWeapon()
     {
         playerDamage.setShotFire( getBurstShot() );
         return playerDamage;
