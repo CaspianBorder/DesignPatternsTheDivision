@@ -25,7 +25,7 @@ public abstract class WeaponFactory
         weapon = initialWeapon( weaponType );
         weapon.setSingleShotDamage( (int) ( weapon.getINITIAL_DAMAGE() * damageMultiplier ) );
         weapon.setWeaponInitial();
-        return null;
+        return weapon;
     }
 
     private double createDamageMultiplier()

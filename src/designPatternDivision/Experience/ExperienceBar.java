@@ -11,8 +11,9 @@ public class ExperienceBar
 
     }
 
-    public ExperienceBar( int initExp )
+    public ExperienceBar( int initExp , int level )
     {
+        playerLevel = level;
         getExperiencePoint( initExp );
     }
 
@@ -34,5 +35,19 @@ public class ExperienceBar
         return false;
     }
 
+    public int getCurrentExperiencePoint()
+    {
+        return experiencePoint;
+    }
 
+    public int getPlayerLevel()
+    {
+        return playerLevel;
+    }
+
+    public void reset()
+    {
+        playerLevel = 0;
+        experiencePoint = 0;
+    }
 }

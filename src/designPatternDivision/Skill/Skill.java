@@ -46,6 +46,13 @@ public abstract class Skill
         return true;
     }
 
+    public void resetSkill()
+    {
+        isReady = true;
+        isActive = false;
+        cooldownLeft = 0;
+    }
+
     public DamageModule useSkill( DamageModule damageModule )
     {
         return damageModule;
