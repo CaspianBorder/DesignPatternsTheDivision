@@ -15,8 +15,15 @@ public class PlayerDamage extends DamageModule
         return;
     }
 
+    @Override
     public int getShotFire()
     {
         return shotFire;
+    }
+
+    @Override
+    public int getDamage()
+    {
+        return super.getDamage() * shotFire;
     }
 }

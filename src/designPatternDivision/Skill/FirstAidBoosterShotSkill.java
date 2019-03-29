@@ -20,7 +20,7 @@ public class FirstAidBoosterShotSkill extends FirstAidSkill
     {
         if ( isActive )
         {
-            if ( inComingDamage == false )
+            if ( !inComingDamage )
             {
                 return super.useSkill( new FirstAidDamageBuffer( damageModule ) );
             }
@@ -35,11 +35,5 @@ public class FirstAidBoosterShotSkill extends FirstAidSkill
             inComingDamage = false ;
             return super.useSkill( damageModule );
         }
-    }
-
-    public void setInComingDamage ()
-    {
-        inComingDamage = true;
-        return;
     }
 }

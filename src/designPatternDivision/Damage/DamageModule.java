@@ -18,4 +18,9 @@ public class DamageModule
     {
         return basicDamage;
     }
+
+    public int getShotFire()
+    {
+        return 1;
+    }
 }

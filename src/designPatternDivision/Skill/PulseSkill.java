@@ -17,12 +17,13 @@ public class PulseSkill extends Skill
     {
         if ( isActive )
         {
-            return super.useSkill( new PulseDamageModifier( damageModule ) );
+            if ( !inComingDamage )
+            {
+                return super.useSkill( new PulseDamageModifier( damageModule ) );
+            }
         }
-        else
-        {
-            return super.useSkill( damageModule );
-        }
+        inComingDamage = false;
+        return super.useSkill( damageModule );
     }
 
     @Override

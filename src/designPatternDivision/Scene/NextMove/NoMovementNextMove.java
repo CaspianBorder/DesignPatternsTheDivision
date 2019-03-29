@@ -12,7 +12,7 @@ public class NoMovementNextMove extends NextMove
     }
 
     @Override
-    public PlayerDamage executeNextMove()
+    public DamageModule executeNextMove()
     {
         return null;
     }

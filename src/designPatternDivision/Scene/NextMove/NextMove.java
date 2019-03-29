@@ -13,5 +13,5 @@ public abstract class NextMove
         this.player = player;
     }
 
-    public abstract PlayerDamage executeNextMove();
+    public abstract DamageModule executeNextMove();
 }

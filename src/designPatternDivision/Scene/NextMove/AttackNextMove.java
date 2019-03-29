@@ -12,9 +12,9 @@ public class AttackNextMove extends NextMove
     }
 
     @Override
-    public PlayerDamage executeNextMove()
+    public DamageModule executeNextMove()
     {
-        return player.getWeapon().useWeapon();
+        return player.useWeapon();
     }
 
 }

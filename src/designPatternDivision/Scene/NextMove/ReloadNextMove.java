@@ -1,5 +1,6 @@
 package designPatternDivision.Scene.NextMove;
 
+import designPatternDivision.Damage.DamageModule;
 import designPatternDivision.Damage.PlayerDamage;
 import designPatternDivision.Player;
 
@@ -11,7 +12,7 @@ public class ReloadNextMove extends NextMove
     }
 
     @Override
-    public PlayerDamage executeNextMove()
+    public DamageModule executeNextMove()
     {
         player.getWeapon().reloadMagazine();
         return null;

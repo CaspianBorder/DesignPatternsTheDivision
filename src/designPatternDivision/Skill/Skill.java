@@ -8,6 +8,7 @@ public abstract class Skill
     String skillName;
     boolean isActive = false;
     boolean isReady = false;
+    boolean inComingDamage = false;
     int durationTime;
     int durationLeft = 0;
     int cooldownTime;
@@ -53,6 +54,11 @@ public abstract class Skill
         cooldownLeft = 0;
     }
 
+    public boolean isActive()
+    {
+        return isActive;
+    }
+
     public DamageModule useSkill( DamageModule damageModule )
     {
         return damageModule;
@@ -64,4 +70,9 @@ public abstract class Skill
     }
 
     public abstract StringBuilder skillDescription();
+
+    public void setInComingDamage()
+    {
+        inComingDamage = true;
+    }
 }

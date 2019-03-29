@@ -1,8 +1,10 @@
 package designPatternDivision.Scene;
 
+import designPatternDivision.Damage.DamageModule;
 import designPatternDivision.Damage.PlayerDamage;
 import designPatternDivision.Experience.Experience;
 import designPatternDivision.Mob.Mob;
+import designPatternDivision.Player;
 import designPatternDivision.Scene.NextMove.*;
 
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ public abstract class BattleScene extends Scene
     final double PLAYER_NO_SHOOTING_HIT_POSIBILITY = 0.2;
     final double MOB_SHOOTING_HIT_POSIBILITY = 0.8;
     final double MOB_NO_SHOOTING_HIT_POSIBILITY = 0.5;
+    Player player = Player.getPlayerInstance();
     PlayerDamage playerDamage;
     double playerHitPosibility;
 
@@ -73,6 +76,10 @@ public abstract class BattleScene extends Scene
         {
             playerHitPosibility = PLAYER_SHOOTING_HIT_POSIBILITY;
             targetDown = player2MobDamage( nextMove.executeNextMove() , target );
+            if ( targetDown == true )
+            {
+                addPlayerExp();
+            }
         }
         else
         {
@@ -82,13 +89,14 @@ public abstract class BattleScene extends Scene
         return targetDown;
     }
 
-    private boolean player2MobDamage( PlayerDamage playerDamage , int target )
+    private boolean player2MobDamage( DamageModule damageModule , int target )
     {
         double hitPosibility = 1;
         int finalDamage = 0;
+        int hitPoint = 0;
         Random random = new Random();
 
-        if ( mobArrayList.get( target ).getShootingState() == true )
+        if ( mobArrayList.get( target ).getShootingState() )
         {
             hitPosibility = MOB_SHOOTING_HIT_POSIBILITY;
         }
@@ -97,15 +105,17 @@ public abstract class BattleScene extends Scene
             hitPosibility = MOB_NO_SHOOTING_HIT_POSIBILITY;
         }
 
-        for ( int i = 0 ; i < playerDamage.getShotFire() ; i++ )
+        for ( int i = 0 ; i < damageModule.getShotFire() ; i++ )
         {
             if ( random.nextDouble() <= hitPosibility )
             {
-                finalDamage += playerDamage.getDamage();
+                hitPoint ++ ;
+                finalDamage += damageModule.getDamage();
             }
         }
+        finalDamage = ( hitPoint / damageModule.getShotFire() ) * damageModule.getDamage();
 
-        if ( mobArrayList.get( target ).getHealthPoint().getDamaged( finalDamage ) == true )
+        if ( mobArrayList.get( target ).getHealthPoint().getDamaged( finalDamage ) )
         {
             mobArrayList.remove( target );
             return true;
@@ -142,7 +152,12 @@ public abstract class BattleScene extends Scene
             }
         }
 
-        return player.getHealthPoint().getDamaged( finalDamage );
+        return player.playerGetDamaged( new DamageModule( finalDamage ) );
+    }
+
+    public boolean isSceneClear()
+    {
+        return mobArrayList.isEmpty();
     }
 
     private void addPlayerExp()

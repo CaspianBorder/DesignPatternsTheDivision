@@ -7,6 +7,12 @@ public class M700Tactical extends MarksmanRifleWeapon
     private static final int M700_TACTICAL_MAGAZINE_SIZE = 5;
 
     @Override
+    public String getWeaponName()
+    {
+        return WeaponName.M700TACTICAL;
+    }
+
+    @Override
     void setRateOfFire()
     {
         rateOfFire = M700_TACTICAL_RATE_OF_FIRE;

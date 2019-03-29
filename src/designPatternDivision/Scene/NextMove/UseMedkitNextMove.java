@@ -12,7 +12,7 @@ public class UseMedkitNextMove extends NextMove
     }
 
     @Override
-    public PlayerDamage executeNextMove()
+    public DamageModule executeNextMove()
     {
         player.getPlayerHealthPoint().useMedkit();
         return null;

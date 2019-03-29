@@ -22,9 +22,9 @@ public class PlayerStatusStore
             stringBuilder.append( System.lineSeparator() );
             stringBuilder.append( player.getExperienceBar().getCurrentExperiencePoint() );
             stringBuilder.append( System.lineSeparator() );
-            for ( int i = 0 ; i < player.getWeaponStash().size() ; i++ )
+            for ( int i = 0 ; i < player.getWeaponStashCollectionList().size() ; i++ )
             {
-                stringBuilder.append( player.getWeaponStash().get( i ).toString() );
+                stringBuilder.append( player.getWeaponStashCollectionList().get( i ).toString() );
                 stringBuilder.append( System.lineSeparator() );
             }
             bufferedWriter.flush();
@@ -40,6 +40,7 @@ public class PlayerStatusStore
     {
         BufferedReader bufferedReader = null;
         String input;
+        String[] inputSplit;
         Player player = Player.getPlayerInstance();
         try
         {
@@ -55,12 +56,9 @@ public class PlayerStatusStore
             while ( bufferedReader.ready() )
             {
                 input = bufferedReader.readLine();
-                WeaponStash weaponStash = new WeaponStash();
-                weaponStash.setWeaponType( input.split( "," )[0] );
-                weaponStash.setDamage( Integer.valueOf( input.split( "," )[1] ) );
-                weaponStashList.add( weaponStash );
+                inputSplit = input.split( "," );
+                player.getWeaponStashCollection().acquireWeapon( inputSplit[0] , Integer.valueOf( inputSplit[1] ) );
             }
-            player.setWeaponStash( weaponStashList );
             bufferedReader.close();
         }
         catch ( IOException e )

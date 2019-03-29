@@ -1,8 +1,9 @@
 package designPatternDivision.Weapon;
 
+import designPatternDivision.Damage.DamageModule;
 import designPatternDivision.Damage.PlayerDamage;
 
-public abstract class Weapon
+public abstract class Weapon implements WeaponName
 {
     int INITIAL_DAMAGE;
     int singleShotDamage;
@@ -12,7 +13,7 @@ public abstract class Weapon
     int burstShot;
     PlayerDamage playerDamage;
 
-    public PlayerDamage useWeapon()
+    public DamageModule useWeapon()
     {
         playerDamage.setShotFire( getBurstShot() );
         return playerDamage;
@@ -34,6 +35,8 @@ public abstract class Weapon
         setShotLeft();
         return;
     }
+
+    public abstract String getWeaponName();
 
     public int getSingleShotDamage()
     {
