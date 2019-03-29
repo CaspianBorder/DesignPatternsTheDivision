@@ -16,6 +16,14 @@ public class VeteranMob extends Mob
         shootPosibility *= 1.25;
     }
 
+    @Override
+    public Mob getMobInstance()
+    {
+        Mob mobClone = super.getMobInstance();
+        mobClone = new VeteranMob( mobClone );
+        return mobClone;
+    }
+
     void setDamageModule()
     {
         damageModule = new DamageModule( (int) ( basicDamage * 1.2 ) );

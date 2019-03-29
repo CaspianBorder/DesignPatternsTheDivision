@@ -15,6 +15,7 @@ public class Mob
     boolean shootingState;
     double shootPosibility;
     String mobColor;
+    Mob mobInstance;
 
     DamageModule damageModule;
     HealthPoint healthPoint;
@@ -27,6 +28,24 @@ public class Mob
         mobColor = "RED";
         setDamageModule();
         setHealthPoint();
+    }
+
+    public Mob getMobInstance()
+    {
+        Mob mobClone = null;
+        if ( mobInstance == null )
+        {
+            mobInstance = new Mob();
+        }
+        try
+        {
+            mobClone = (Mob) mobInstance.clone();
+        }
+        catch ( CloneNotSupportedException e )
+        {
+            e.printStackTrace();
+        }
+        return mobClone;
     }
 
     void setDamageModule()

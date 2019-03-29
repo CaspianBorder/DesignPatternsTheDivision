@@ -1,10 +1,10 @@
 package designPatternDivision.Weapon;
 
-import designPatternDivision.Damage.DamageModule;
 import designPatternDivision.Damage.PlayerDamage;
 
 public abstract class Weapon
 {
+    int INITIAL_DAMAGE;
     int singleShotDamage;
     int rateOfFire;
     int magazineSize;
@@ -32,7 +32,6 @@ public abstract class Weapon
         setRateOfFire();
         setMagazineSize();
         setShotLeft();
-        setDamageModule();
         return;
     }
 
@@ -74,6 +73,8 @@ public abstract class Weapon
         return;
     }
 
+    public abstract int getINITIAL_DAMAGE();
+
     abstract void setRateOfFire();
 
     abstract void setMagazineSize();
@@ -89,4 +90,5 @@ public abstract class Weapon
         playerDamage = new PlayerDamage( singleShotDamage );
         return;
     }
+
 }

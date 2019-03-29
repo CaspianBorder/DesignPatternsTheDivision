@@ -2,6 +2,7 @@ package designPatternDivision.Weapon;
 
 public class M700Tactical extends MarksmanRifleWeapon
 {
+    private static final int M700_TACTICAL_INITIAL_DAMAGE = 210;
     private static final int M700_TACTICAL_RATE_OF_FIRE = 1;
     private static final int M700_TACTICAL_MAGAZINE_SIZE = 5;
 
@@ -19,4 +20,9 @@ public class M700Tactical extends MarksmanRifleWeapon
         return;
     }
 
+    @Override
+    public int getINITIAL_DAMAGE()
+    {
+        return M700_TACTICAL_INITIAL_DAMAGE;
+    }
 }

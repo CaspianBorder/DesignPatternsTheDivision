@@ -2,6 +2,7 @@ package designPatternDivision.Weapon;
 
 public class FirstWaveM1A extends MarksmanRifleWeapon
 {
+    private static final int FIRST_WAVE_M1A_INITIAL_DAMAGE = 100;
     private static final int FIRST_WAVE_M1A_RATE_OF_FIRE = 2;
     private static final int FIRST_WAVE_M1A_MAGAZINE_SIZE = 10;
 
@@ -17,5 +18,11 @@ public class FirstWaveM1A extends MarksmanRifleWeapon
     {
         magazineSize = FIRST_WAVE_M1A_MAGAZINE_SIZE;
         return;
+    }
+
+    @Override
+    public int getINITIAL_DAMAGE()
+    {
+        return FIRST_WAVE_M1A_INITIAL_DAMAGE;
     }
 }

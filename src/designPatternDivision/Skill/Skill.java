@@ -1,29 +1,32 @@
 package designPatternDivision.Skill;
 
-public class Skill
+import designPatternDivision.Damage.DamageModule;
+import designPatternDivision.HealthPoint.HealthPoint;
+
+public abstract class Skill
 {
     String skillName;
-    boolean isActive;
-    boolean isReady;
+    boolean isActive = false;
+    boolean isReady = false;
     int durationTime;
-    int durationLeft;
+    int durationLeft = 0;
     int cooldownTime;
-    int cooldownLeft;
+    int cooldownLeft = 0;
 
-    public void moveOver ()
+    public void moveOver()
     {
         if ( isActive )
         {
-            durationLeft -- ;
+            durationLeft--;
             if ( durationLeft == 0 )
             {
-                isActive = false ;
+                isActive = false;
                 cooldownLeft = cooldownTime;
             }
         }
-        else
+        else if ( isReady == false )
         {
-            cooldownLeft -- ;
+            cooldownLeft--;
             if ( cooldownLeft == 0 )
             {
                 isReady = true;
@@ -31,12 +34,27 @@ public class Skill
         }
     }
 
-    public boolean activeSkill ()
+    public boolean activeSkill()
     {
         if ( isReady == false )
         {
-            return false ;
+            return false;
         }
+        isReady = false;
+        isActive = true;
+        durationLeft = durationTime;
         return true;
     }
+
+    public DamageModule useSkill( DamageModule damageModule )
+    {
+        return damageModule;
+    }
+
+    public HealthPoint useSkill( HealthPoint healthPoint)
+    {
+        return healthPoint;
+    }
+
+    public abstract StringBuilder skillDescription();
 }
