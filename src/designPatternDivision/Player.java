@@ -8,7 +8,7 @@ import designPatternDivision.Weapon.Weapon;
 public class Player
 {
     private static final int PLAYER_INITIAL_FULL_HEALTH = 3000;
-    private static Player player;
+    private volatile static Player player;
     private Weapon weaponSlot1;
     private Weapon weaponSlot2;
     private int currentSlot;
@@ -21,11 +21,15 @@ public class Player
         experienceBar = new ExperienceBar();
     }
 
-    public static synchronized Player getPlayerInstance()
+    public static Player getPlayerInstance()
     {
         if ( player == null )
         {
-            player = new Player();
+            synchronized (Player.class) {
+                if(player == null) {
+                    player = new Player();
+                }
+            }
         }
         return player;
     }
