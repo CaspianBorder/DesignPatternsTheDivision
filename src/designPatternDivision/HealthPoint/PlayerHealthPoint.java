@@ -39,6 +39,11 @@ public class PlayerHealthPoint extends HealthPoint
         return false;
     }
 
+    public void resetHealthPoint()
+    {
+        healthPoint = fullHealthPoint;
+    }
+
     private boolean hasMedkit()
     {
         return medkitNumber > 0 ? true : false;

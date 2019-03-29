@@ -11,6 +11,7 @@ public class VeteranMob extends Mob
     {
         mob = inputMob;
         mobColor = "PURPLE";
+        mobType = "Veteran Rifleman";
         setDamageModule();
         setHealthPoint();
         shootPosibility *= 1.25;

@@ -32,4 +32,9 @@ public abstract class Scene
         return mobArrayList;
     }
 
+    public String getInfo()
+    {
+        return "";
+    }
+
 }

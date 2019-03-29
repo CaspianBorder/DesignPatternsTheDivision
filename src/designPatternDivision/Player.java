@@ -5,7 +5,7 @@ import designPatternDivision.Damage.PlayerDamage;
 import designPatternDivision.Experience.ExperienceBar;
 import designPatternDivision.HealthPoint.HealthPoint;
 import designPatternDivision.HealthPoint.PlayerHealthPoint;
-import designPatternDivision.Skill.Skill;
+import designPatternDivision.Skill.*;
 import designPatternDivision.Weapon.Factory.StandardWeaponFactory;
 import designPatternDivision.Weapon.LightweightM4;
 import designPatternDivision.Weapon.Weapon;
@@ -20,6 +20,7 @@ public class Player
     private volatile static Player player;
     private Weapon weaponSlot1;
     private Weapon weaponSlot2;
+    private SkillUnlock skillUnlock;
     private Skill skillSlot1;
     private Skill skillSlot2;
     private int currentSlot;
@@ -158,6 +159,42 @@ public class Player
             damageModule = skillSlot2.useSkill( damageModule );
         }
         return playerHealthPoint.getDamaged( damageModule.getDamage() );
+    }
+
+    public SkillUnlock getSkillUnlock()
+    {
+        return skillUnlock;
+    }
+
+    public void setSkillUnlock( SkillUnlock skillUnlock )
+    {
+        this.skillUnlock = skillUnlock;
+    }
+
+    public void updateSkillStatus()
+    {
+        if ( skillUnlock.isPulseLevel1() )
+        {
+            if ( skillUnlock.isPulseLevel2() )
+            {
+                skillSlot1 = new PulseReconPackSkill();
+            }
+            else
+            {
+                skillSlot1 = new PulseSkill();
+            }
+        }
+        if ( skillUnlock.isFirstAidLevel1() )
+        {
+            if ( skillUnlock.isFirstAidLevel2() )
+            {
+                skillSlot2 = new FirstAidBoosterShotSkill();
+            }
+            else
+            {
+                skillSlot2 = new FirstAidSkill();
+            }
+        }
     }
 
     void setWeapon( Weapon weapon , int slot )

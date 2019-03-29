@@ -16,6 +16,8 @@ public abstract class BattleScene extends Scene
     final double PLAYER_NO_SHOOTING_HIT_POSIBILITY = 0.2;
     final double MOB_SHOOTING_HIT_POSIBILITY = 0.8;
     final double MOB_NO_SHOOTING_HIT_POSIBILITY = 0.5;
+    boolean isFirstInfo = true;
+    String firstInfo;
     Player player = Player.getPlayerInstance();
     PlayerDamage playerDamage;
     double playerHitPosibility;
@@ -109,7 +111,7 @@ public abstract class BattleScene extends Scene
         {
             if ( random.nextDouble() <= hitPosibility )
             {
-                hitPoint ++ ;
+                hitPoint++;
                 finalDamage += damageModule.getDamage();
             }
         }
@@ -164,5 +166,29 @@ public abstract class BattleScene extends Scene
     {
         player.getExperienceBar().getExperiencePoint( new Experience().getExperiencePoint() );
         return;
+    }
+
+    public void setFirstInfo( String firstInfo )
+    {
+        isFirstInfo = true;
+        this.firstInfo = firstInfo;
+    }
+
+    @Override
+    public String getInfo()
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        if ( isFirstInfo )
+        {
+            stringBuilder.append( firstInfo );
+            stringBuilder.append( System.lineSeparator() );
+            isFirstInfo = false;
+        }
+        for ( int i = 0 ; i < mobArrayList.size() ; i++ )
+        {
+            stringBuilder.append( mobArrayList.get( i ).toString() );
+            stringBuilder.append( System.lineSeparator() );
+        }
+        return stringBuilder.toString();
     }
 }

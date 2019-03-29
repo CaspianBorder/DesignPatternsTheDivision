@@ -1,7 +1,5 @@
 package designPatternDivision.Experience;
 
-import designPatternDivision.Player;
-
 public class ExperienceBar
 {
     final int EXPERIENCE_CAP = 150;

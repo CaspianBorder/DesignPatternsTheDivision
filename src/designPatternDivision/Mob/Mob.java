@@ -15,6 +15,7 @@ public class Mob
     boolean shootingState;
     double shootPosibility;
     String mobColor;
+    String mobType;
     Mob mobInstance;
 
     DamageModule damageModule;
@@ -26,6 +27,7 @@ public class Mob
         basicHealth = MOB_BASIC_HEALTH;
         shootPosibility = MOB_BASIC_SHOOT_POSIBILITY;
         mobColor = "RED";
+        mobType = "Rifleman";
         setDamageModule();
         setHealthPoint();
     }
@@ -90,5 +92,16 @@ public class Mob
     public boolean getShootingState()
     {
         return shootingState;
+    }
+
+    public String getMobType()
+    {
+        return mobType;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "------>" + mobType + " , " + healthPoint.getHealthPoint() + " hp" ;
     }
 }

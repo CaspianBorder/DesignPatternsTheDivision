@@ -13,4 +13,10 @@ public class SafeAreaScene extends Scene
     {
         return;
     }
+
+    @Override
+    public String getInfo()
+    {
+        return "You are now entering the safe area.";
+    }
 }

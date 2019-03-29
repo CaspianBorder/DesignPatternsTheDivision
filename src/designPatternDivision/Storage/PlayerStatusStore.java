@@ -2,6 +2,7 @@ package designPatternDivision.Storage;
 
 import designPatternDivision.Experience.ExperienceBar;
 import designPatternDivision.Player;
+import designPatternDivision.Skill.SkillUnlock;
 import designPatternDivision.Weapon.WeaponStash;
 
 import java.io.*;
@@ -21,6 +22,8 @@ public class PlayerStatusStore
             stringBuilder.append( player.getExperienceBar().getPlayerLevel() );
             stringBuilder.append( System.lineSeparator() );
             stringBuilder.append( player.getExperienceBar().getCurrentExperiencePoint() );
+            stringBuilder.append( System.lineSeparator() );
+            stringBuilder.append( player.getSkillUnlock().toString() );
             stringBuilder.append( System.lineSeparator() );
             for ( int i = 0 ; i < player.getWeaponStashCollectionList().size() ; i++ )
             {
@@ -53,6 +56,10 @@ public class PlayerStatusStore
             input = bufferedReader.readLine();
             expPoint = Integer.valueOf( input );
             player.setExperienceBar( new ExperienceBar( expPoint , level ) );
+            input = bufferedReader.readLine();
+            inputSplit = input.split( "," );
+            player.setSkillUnlock( new SkillUnlock( Boolean.valueOf( inputSplit[0] ) , Boolean.valueOf( inputSplit[1] ) , Boolean.valueOf( inputSplit[2] ) , Boolean.valueOf( inputSplit[3] ) ) );
+            player.updateSkillStatus();
             while ( bufferedReader.ready() )
             {
                 input = bufferedReader.readLine();

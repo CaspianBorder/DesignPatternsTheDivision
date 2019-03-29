@@ -6,6 +6,7 @@ public class SceneControl
 {
     int missionStage;
     int missionDifficulty;
+    int currentStage;
     BattleScene battleScene = null;
     Player player = Player.getPlayerInstance();
 
@@ -17,21 +18,38 @@ public class SceneControl
 
     public BattleScene getBattleScene()
     {
-        if ( battleScene == null || battleScene.isSceneClear() )
+        if ( currentStage < missionStage )
         {
-            if ( battleScene != null && battleScene.isSceneClear() )
+            if ( battleScene == null || battleScene.isSceneClear() )
             {
-                player.resetSkill();
+                if ( battleScene != null && battleScene.isSceneClear() )
+                {
+                    player.resetSkill();
+                    player.getPlayerHealthPoint().resetHealthPoint();
+                }
+                if ( missionDifficulty < 2 )
+                {
+                    battleScene = new NormalBattleScene( 3 + missionDifficulty );
+                    battleScene.setFirstInfo("Stage");
+                }
+                else
+                {
+                    battleScene = new HardBattleScene( 4 + missionDifficulty - 2 );
+                }
             }
-            if ( missionDifficulty < 2 )
-            {
-                battleScene = new NormalBattleScene( 3 + missionDifficulty );
-            }
-            else
-            {
-                battleScene = new HardBattleScene( 4 + missionDifficulty - 2 );
-            }
+            return battleScene;
         }
-        return battleScene;
+        else
+        {
+            return null;
+        }
+    }
+
+    public SafeAreaScene getSafeAreaScene()
+    {
+        player.resetSkill();
+        player.getPlayerHealthPoint().resetHealthPoint();
+        player.getPlayerHealthPoint().resupplyMedkit();
+        return new SafeAreaScene();
     }
 }
