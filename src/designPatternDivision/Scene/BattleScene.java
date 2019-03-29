@@ -62,11 +62,25 @@ public abstract class BattleScene extends Scene
             case 1:
             {
                 nextMove = new ReloadNextMove( player );
+                setFirstInfo( "Weapon Reloaded" );
                 break;
             }
             case 2:
             {
                 nextMove = new UseMedkitNextMove( player );
+                setFirstInfo( "Medkit used" );
+                break;
+            }
+            case 3:
+            {
+                nextMove = new UseSkill1NextMove( player );
+                setFirstInfo( "Skill 1 used" + System.lineSeparator() + player.getSkillSlot1().toString() );
+                break;
+            }
+            case 4:
+            {
+                nextMove = new UseSkill2NextMove( player );
+                setFirstInfo( "Skill 2 used" + System.lineSeparator() + player.getSkillSlot1().toString() );
                 break;
             }
             default:
@@ -117,6 +131,7 @@ public abstract class BattleScene extends Scene
         }
         finalDamage = ( hitPoint / damageModule.getShotFire() ) * damageModule.getDamage();
 
+        setFirstInfo( "Dealing " + finalDamage + " damage to " + mobArrayList.get( target ).toString() );
         if ( mobArrayList.get( target ).getHealthPoint().getDamaged( finalDamage ) )
         {
             mobArrayList.remove( target );

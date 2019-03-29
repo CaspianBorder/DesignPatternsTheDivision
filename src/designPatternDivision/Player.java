@@ -103,6 +103,16 @@ public class Player
         return;
     }
 
+    public Skill getSkillSlot1()
+    {
+        return skillSlot1;
+    }
+
+    public Skill getSkillSlot2()
+    {
+        return skillSlot2;
+    }
+
     public void resetSkill()
     {
         if ( skillSlot1 != null )
