@@ -8,7 +8,7 @@ public class PulseSkill extends Skill
     public PulseSkill()
     {
         skillName = "Pulse";
-        durationTime = 4;
+        durationTime = 5;
         cooldownTime = 6;
     }
 
@@ -27,16 +27,16 @@ public class PulseSkill extends Skill
     }
 
     @Override
-    public StringBuilder skillDescription()
+    public String skillDescription()
     {
-        StringBuilder stringBuffer = new StringBuilder();
-        stringBuffer.append( "Pulse" );
-        stringBuffer.append( System.lineSeparator() );
-        stringBuffer.append( "increase 30% of weapon damage on enemy" );
-        stringBuffer.append( System.lineSeparator() );
-        stringBuffer.append( "duration : 4" );
-        stringBuffer.append( System.lineSeparator() );
-        stringBuffer.append( "cooldown : 6" );
+        String stringBuffer = "";
+        stringBuffer += "Pulse. ";
+        stringBuffer += System.lineSeparator();
+        stringBuffer += "increase 30% of weapon damage on enemy. ";
+        stringBuffer += System.lineSeparator();
+        stringBuffer += "duration : 4. ";
+        stringBuffer += System.lineSeparator();
+        stringBuffer += "cooldown : 6. ";
         return stringBuffer;
     }
 }

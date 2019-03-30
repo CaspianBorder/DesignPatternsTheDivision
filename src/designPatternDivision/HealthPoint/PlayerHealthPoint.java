@@ -32,7 +32,7 @@ public class PlayerHealthPoint extends HealthPoint
             if ( !isFullHealth() )
             {
                 medkitNumber--;
-                getHeal( healthPoint / 2 );
+                getHeal( fullHealthPoint / 2 );
                 return true;
             }
         }

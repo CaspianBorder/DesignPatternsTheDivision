@@ -13,6 +13,7 @@ public class DamageModule
     public DamageModule( int inputDamage )
     {
         basicDamage = inputDamage;
+        shotFire = 1;
     }
 
     public int getDamage()

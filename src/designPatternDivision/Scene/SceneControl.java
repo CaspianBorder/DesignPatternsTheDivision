@@ -25,28 +25,39 @@ public class SceneControl
             {
                 if ( battleScene != null && battleScene.isSceneClear() )
                 {
+                    currentStage ++ ;
                     player.resetSkill();
                     player.getPlayerHealthPoint().resetHealthPoint();
+//                    battleScene.setPlayerNextMove( -1 , 0 );
                 }
-                if ( missionDifficulty < 2 )
+                if ( currentStage < missionStage )
                 {
-                    battleScene = new NormalBattleScene( 3 + missionDifficulty );
-                    battleScene.setFirstInfo("Stage Clear , move to next stage" + System.lineSeparator() + "Stage " + currentStage + " / " + missionStage );
+                    if (  missionDifficulty < 2 )
+                    {
+                        battleScene = new NormalBattleScene( 3 + missionDifficulty );
+                        if ( currentStage != 0 )
+                        {
+                            battleScene.setFirstInfo( "Stage Clear , move to next stage" + System.lineSeparator() );
+                        }
+                        battleScene.setFirstInfo( "Stage " + ( currentStage + 1 ) + " / " + missionStage );
+                    }
+                    else
+                    {
+                        battleScene = new HardBattleScene( 4 + missionDifficulty - 2 );
+                    }
+                    CombatGUI combatGUI = CombatGUI.getCombatGUIInstance();
+                    combatGUI.appendMsg( battleScene.getInfo() );
+                    combatGUI.perMoveAction();
                 }
-                else
-                {
-                    battleScene = new HardBattleScene( 4 + missionDifficulty - 2 );
-                }
-                CombatGUI combatGUI = CombatGUI.getCombatGUIInstance();
-                combatGUI.appendMsg( battleScene.getInfo() );
-                combatGUI.perMoveAction();
             }
-            return battleScene;
         }
         else
         {
-            return null;
+            CombatGUI combatGUI = CombatGUI.getCombatGUIInstance();
+            combatGUI.missionCleared();
+            battleScene = null;
         }
+        return battleScene;
     }
 
     public SafeAreaScene getSafeAreaScene()

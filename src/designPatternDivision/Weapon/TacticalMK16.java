@@ -2,7 +2,7 @@ package designPatternDivision.Weapon;
 
 public class TacticalMK16 extends AssaultRifleWeapon
 {
-    private static final int TACTICAL_MK16_INITIAL_DAMAGE = 40;
+    private static final int TACTICAL_MK16_INITIAL_DAMAGE = 80;
     private static final int TACTICAL_MK16_RATE_OF_FIRE = 5;
     private static final int TACTICAL_MK16_MAGAZINE_SIZE = 30;
 

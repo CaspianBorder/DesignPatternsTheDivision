@@ -1,37 +1,40 @@
 package designPatternDivision.Skill;
 
 import designPatternDivision.HealthPoint.HealthPoint;
+import designPatternDivision.Player;
 
 public class FirstAidSkill extends Skill
 {
     public FirstAidSkill()
     {
         skillName = "FirstAid";
-        durationTime = 3;
+        durationTime = 4;
         cooldownTime = 5;
     }
 
     @Override
     public HealthPoint useSkill( HealthPoint healthPoint )
     {
-        if ( isActive )
+        if ( isActive && durationLeft == 4 )
         {
-            healthPoint.getHeal( 800 );
+//            healthPoint.getHeal( 800 );
+            Player player = Player.getPlayerInstance();
+            player.getHealthPoint().getHeal( 800 );
         }
         return super.useSkill( healthPoint );
     }
 
     @Override
-    public StringBuilder skillDescription()
+    public String skillDescription()
     {
-        StringBuilder stringBuffer = new StringBuilder();
-        stringBuffer.append( "First Aid" );
-        stringBuffer.append( System.lineSeparator() );
-        stringBuffer.append( "Recover 800 point of Health" );
-        stringBuffer.append( System.lineSeparator() );
-        stringBuffer.append( "duration : 3" );
-        stringBuffer.append( System.lineSeparator() );
-        stringBuffer.append( "cooldown : 5" );
+        String stringBuffer = "";
+        stringBuffer += "First Aid. ";
+        stringBuffer += System.lineSeparator();
+        stringBuffer += "Recover 800 point of Health. ";
+        stringBuffer += System.lineSeparator();
+        stringBuffer += "duration : 3. ";
+        stringBuffer += System.lineSeparator();
+        stringBuffer += "cooldown : 5. ";
         return stringBuffer;
     }
 }

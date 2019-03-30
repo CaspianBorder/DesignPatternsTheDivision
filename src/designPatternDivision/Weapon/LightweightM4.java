@@ -2,7 +2,7 @@ package designPatternDivision.Weapon;
 
 public class LightweightM4 extends AssaultRifleWeapon
 {
-    private static final int LIGHTWEIGHT_M4_INITIAL_DAMAGE = 30;
+    private static final int LIGHTWEIGHT_M4_INITIAL_DAMAGE = 60;
     private static final int LIGHTWEIGHT_M4_RATE_OF_FIRE = 7;
     private static final int LIGHTWEIGHT_M4_MAGAZINE_SIZE = 30;
 

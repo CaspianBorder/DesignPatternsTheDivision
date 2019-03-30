@@ -34,13 +34,6 @@ public class Player
         playerHealthPoint = new PlayerHealthPoint( PLAYER_INITIAL_FULL_HEALTH );
         experienceBar = new ExperienceBar();
         weaponStashCollection = new WeaponStashCollection();
-        weaponStashCollection.acquireWeapon( setInitWeapon() );
-        //debug
-        skillUnlock = new SkillUnlock( true , false , true , true );
-        weaponSlot1 = new StandardWeaponFactory().createWeapon( "LightweightM4" );
-        weaponSlot2 = new StandardWeaponFactory().createWeapon( "FirstWaveM1A" );
-        currentSlot = 1;
-        experienceBar = new ExperienceBar( 30 , 1 );
     }
 
     public static Player getPlayerInstance()
@@ -130,6 +123,18 @@ public class Player
     public Skill getSkillSlot2()
     {
         return skillSlot2;
+    }
+
+    public void skillNextMove()
+    {
+        if ( skillSlot1 != null )
+        {
+            skillSlot1.moveOver();
+        }
+        if ( skillSlot2 != null )
+        {
+            skillSlot2.moveOver();
+        }
     }
 
     public void resetSkill()
@@ -242,6 +247,17 @@ public class Player
     Weapon setInitWeapon()
     {
         return new StandardWeaponFactory().createWeapon( "LightweightM4" , new LightweightM4().getINITIAL_DAMAGE() );
+    }
+
+    public void newGameInit ()
+    {
+        skillUnlock = new SkillUnlock( true , false , true , true );
+        weaponSlot1 = new StandardWeaponFactory().createWeapon( "LightweightM4" );
+        weaponSlot2 = new StandardWeaponFactory().createWeapon( "FirstWaveM1A" );
+        weaponStashCollection.acquireWeapon( weaponSlot1 );
+        weaponStashCollection.acquireWeapon( weaponSlot2 );
+        currentSlot = 1;
+        experienceBar = new ExperienceBar( 30 , 1 );
     }
 }
 

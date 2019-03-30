@@ -28,7 +28,7 @@ public class HealthPoint
         return isDead();
     }
 
-    boolean isDead()
+    public boolean isDead()
     {
         return healthPoint == 0 ? true : false;
     }

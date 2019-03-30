@@ -5,21 +5,21 @@ public class PulseReconPackSkill extends PulseSkill
     public PulseReconPackSkill()
     {
         skillName = "Pulse-Recon Pack";
-        durationTime = 6;
+        durationTime = 7;
         cooldownTime = 6;
     }
 
     @Override
-    public StringBuilder skillDescription()
+    public String skillDescription()
     {
-        StringBuilder stringBuffer = new StringBuilder();
-        stringBuffer.append( "Pulse - Recon Pack Modification" );
-        stringBuffer.append( System.lineSeparator() );
-        stringBuffer.append( "increase 50% of pulse duration" );
-        stringBuffer.append( System.lineSeparator() );
-        stringBuffer.append( "duration : 6" );
-        stringBuffer.append( System.lineSeparator() );
-        stringBuffer.append( "cooldown : 6" );
+        String stringBuffer = "";
+        stringBuffer += "Pulse - Recon Pack Modification. ";
+        stringBuffer += System.lineSeparator();
+        stringBuffer += "increase 50% of pulse duration. ";
+        stringBuffer += System.lineSeparator();
+        stringBuffer += "duration : 6. ";
+        stringBuffer += System.lineSeparator();
+        stringBuffer += "cooldown : 6. ";
         return stringBuffer;
     }
 }

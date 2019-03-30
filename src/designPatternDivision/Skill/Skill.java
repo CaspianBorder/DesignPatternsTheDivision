@@ -74,7 +74,7 @@ public abstract class Skill
         return healthPoint;
     }
 
-    public abstract StringBuilder skillDescription();
+    public abstract String skillDescription();
 
     public void setInComingDamage()
     {
@@ -85,11 +85,11 @@ public abstract class Skill
     {
         if ( isActive )
         {
-            return skillName + System.lineSeparator() + "Active , " + durationLeft + " move left";
+            return "Active , " + durationLeft + " move left";
         }
         else if ( isReady == false )
         {
-            return skillName + System.lineSeparator() + "Cooldown , " + cooldownLeft + " move left";
+            return "Cooldown , " + cooldownLeft + " move left";
         }
         else
         {

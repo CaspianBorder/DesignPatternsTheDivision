@@ -12,12 +12,12 @@ import java.util.Random;
 
 public abstract class BattleScene extends Scene
 {
-    final double PLAYER_SHOOTING_HIT_POSIBILITY = 0.5;
-    final double PLAYER_NO_SHOOTING_HIT_POSIBILITY = 0.2;
-    final double MOB_SHOOTING_HIT_POSIBILITY = 0.8;
+    final double PLAYER_SHOOTING_HIT_POSIBILITY = 0.75;
+    final double PLAYER_NO_SHOOTING_HIT_POSIBILITY = 0.5;
+    final double MOB_SHOOTING_HIT_POSIBILITY = 0.85;
     final double MOB_NO_SHOOTING_HIT_POSIBILITY = 0.5;
     boolean isFirstInfo = true;
-    String firstInfo;
+    String firstInfo = "";
     CombatGUI combatGUI;
     //    Player player = Player.getPlayerInstance();
     double playerHitPosibility;
@@ -112,9 +112,17 @@ public abstract class BattleScene extends Scene
             playerHitPosibility = PLAYER_NO_SHOOTING_HIT_POSIBILITY;
             nextMove.executeNextMove();
         }
-        mob2PlayerDamage();
-        combatGUI.perMoveAction();
-        combatGUI.appendMsg( getInfo() );
+        if ( isSceneClear() == false )
+        {
+            mob2PlayerDamage();
+            player.skillNextMove();
+            combatGUI.perMoveAction();
+            combatGUI.appendMsg( getInfo() );
+        }
+        else
+        {
+            combatGUI.perMoveAction();
+        }
         return targetDown;
     }
 
@@ -169,7 +177,6 @@ public abstract class BattleScene extends Scene
 
     public boolean mob2PlayerDamage()
     {
-        double hitPosibility;
         int finalDamage = 0;
         Random random = new Random();
         double randomValue;
@@ -181,11 +188,11 @@ public abstract class BattleScene extends Scene
                 randomValue = random.nextDouble();
                 if ( randomValue < playerHitPosibility )
                 {
+                    setFirstInfo( "Receiving " + mobArrayList.get( i ).getDamageModule().getDamage() + " damage from " + mobArrayList.get( i ).toString() );
                     finalDamage += mobArrayList.get( i ).getDamageModule().getDamage();
                 }
             }
         }
-
         return player.playerGetDamaged( new DamageModule( finalDamage ) );
     }
 
@@ -202,8 +209,12 @@ public abstract class BattleScene extends Scene
 
     public void setFirstInfo( String firstInfo )
     {
+        if ( isFirstInfo == true )
+        {
+            this.firstInfo += System.lineSeparator();
+        }
         isFirstInfo = true;
-        this.firstInfo += System.lineSeparator() + firstInfo;
+        this.firstInfo += firstInfo;
     }
 
     @Override
@@ -217,11 +228,20 @@ public abstract class BattleScene extends Scene
             firstInfo = "";
             isFirstInfo = false;
         }
-        for ( int i = 0 ; i < mobArrayList.size() ; i++ )
+        if ( isSceneClear() )
         {
-            stringBuilder.append( mobArrayList.get( i ).toString() );
+            stringBuilder.append( "Stage Cleared!" );
             stringBuilder.append( System.lineSeparator() );
         }
+        else
+        {
+            for ( int i = 0 ; i < mobArrayList.size() ; i++ )
+            {
+                stringBuilder.append( mobArrayList.get( i ).toString() );
+                stringBuilder.append( System.lineSeparator() );
+            }
+        }
+        stringBuilder.append( "---------------"  + System.lineSeparator());
         return stringBuilder.toString();
     }
 

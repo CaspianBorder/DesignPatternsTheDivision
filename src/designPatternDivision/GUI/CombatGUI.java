@@ -21,7 +21,6 @@ public class CombatGUI
     private JProgressBar healthBar;
     private JButton btnSwitchWeapon;
     private JButton btnUseMedkit;
-    private JButton btnFlee;
     private JButton btnSkill1;
     private JButton btnSkill2;
     private JButton btnReload;
@@ -132,6 +131,7 @@ public class CombatGUI
         frame.setBounds( 100 , 100 , 797 , 670 );
         frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         frame.getContentPane().setLayout( null );
+        frame.setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
 
         combatStatusTextField = new JTextArea();
         combatStatusTextField.setEditable( false );
@@ -218,7 +218,7 @@ public class CombatGUI
         txtWeapon2Detail.setBounds( 466 , 353 , 305 , 29 );
         frame.getContentPane().add( txtWeapon2Detail );
 
-        btnSwitchWeapon = new JButton( "switch weapon" );
+        btnSwitchWeapon = new JButton( "Switch weapon" );
         btnSwitchWeapon.setBounds( 635 , 292 , 136 , 51 );
         frame.getContentPane().add( btnSwitchWeapon );
         btnSwitchWeapon.addActionListener( new ActionListener()
@@ -228,6 +228,22 @@ public class CombatGUI
             {
                 player.switchWeapon();
                 setActiveWeapon();
+                if ( player.getWeapon().getShotLeft() > 0 )
+                {
+                    btnFire.setEnabled( true );
+                }
+                else
+                {
+                    btnFire.setEnabled( false );
+                }
+                if ( player.getWeapon().getShotLeft() < player.getWeapon().getMagazineSize() )
+                {
+                    btnReload.setEnabled( true );
+                }
+                else
+                {
+                    btnReload.setEnabled( false );
+                }
             }
         } );
 
@@ -245,7 +261,7 @@ public class CombatGUI
         txtRoundLeft2.setBounds( 466 , 392 , 88 , 21 );
         frame.getContentPane().add( txtRoundLeft2 );
 
-        btnUseMedkit = new JButton( "use medkit" );
+        btnUseMedkit = new JButton( "Use medkit" );
         btnUseMedkit.addActionListener( new ActionListener()
         {
             @Override
@@ -281,10 +297,6 @@ public class CombatGUI
         frame.getContentPane().add( txtMedkitNumber );
         txtMedkitNumber.setColumns( 10 );
 
-        btnFlee = new JButton( "Flee" );
-        btnFlee.setBounds( 678 , 10 , 93 , 22 );
-        frame.getContentPane().add( btnFlee );
-
         btnSkill1 = new JButton( "Skill 1" );
         btnSkill1.setBounds( 466 , 463 , 136 , 51 );
         frame.getContentPane().add( btnSkill1 );
@@ -307,13 +319,15 @@ public class CombatGUI
             }
         } );
 
-        btnReload = new JButton( "reload" );
+        btnReload = new JButton( "Reload" );
+        btnReload.setEnabled( false );
         btnReload.addActionListener( new ActionListener()
         {
             public void actionPerformed( ActionEvent e )
             {
                 sceneControl.getBattleScene().setPlayerNextMove( 1 , 0 );
                 updateRoundInfo();
+                btnReload.setEnabled( false );
             }
         } );
         btnReload.setBounds( 635 , 391 , 136 , 51 );
@@ -389,10 +403,18 @@ public class CombatGUI
         if ( player.getWeaponSlot1() != null )
         {
             txtRoundLeft1.setText( String.valueOf( player.getWeaponSlot1().getShotLeft() + " / " + String.valueOf( player.getWeaponSlot1().getMagazineSize() ) ) );
+            if ( player.getWeaponSlot1().getShotLeft() < player.getWeaponSlot1().getMagazineSize() )
+            {
+                btnReload.setEnabled( true );
+            }
         }
         if ( player.getWeaponSlot2() != null )
         {
             txtRoundLeft2.setText( String.valueOf( player.getWeaponSlot2().getShotLeft() + " / " + String.valueOf( player.getWeaponSlot2().getMagazineSize() ) ) );
+            if ( player.getWeaponSlot2().getShotLeft() < player.getWeaponSlot2().getMagazineSize() )
+            {
+                btnReload.setEnabled( true );
+            }
         }
     }
 
@@ -404,6 +426,10 @@ public class CombatGUI
 
     private void updateTargetBox()
     {
+        if ( sceneControl == null || sceneControl.getBattleScene() == null )
+        {
+            return;
+        }
         ArrayList<String> input = sceneControl.getBattleScene().getMobList();
         targetBox.removeAllItems();
         for ( int i = 0 ; i < input.size() ; i++ )
@@ -413,6 +439,7 @@ public class CombatGUI
         }
         frame.validate();
         frame.repaint();
+        targetBox.setSelectedItem( null );
         btnFire.setEnabled( false );
         setTargetBoxListener();
     }
@@ -426,7 +453,10 @@ public class CombatGUI
             {
                 targetSelected = targetBox.getSelectedIndex();
 //                System.out.println( "Select " + targetSelected );
-                btnFire.setEnabled( true );
+                if ( player.getWeapon().getShotLeft() > 0 )
+                {
+                    btnFire.setEnabled( true );
+                }
             }
         } );
     }
@@ -468,13 +498,10 @@ public class CombatGUI
     {
         player.updateSkillStatus();
         btnSkill1.setText( "Pulse" );
-        if ( player.getSkillUnlock().isPulseLevel1() )
+        if ( player.getSkillSlot1() != null )
         {
-            if ( player.getSkillUnlock().isPulseLevel2() )
-            {
-
-                btnSkill1.setText( "Pulse - Recon Pack" );
-            }
+            btnSkill1.setText( player.getSkillSlot1().toString() );
+            btnSkill1.setToolTipText( player.getSkillSlot1().skillDescription() );
             btnSkill1.setEnabled( true );
         }
         else
@@ -482,12 +509,10 @@ public class CombatGUI
             btnSkill1.setEnabled( false );
         }
         btnSkill2.setText( "FirstAid" );
-        if ( player.getSkillUnlock().isFirstAidLevel1() )
+        if ( player.getSkillSlot2() != null )
         {
-            if ( player.getSkillUnlock().isFirstAidLevel2() )
-            {
-                btnSkill2.setText( "FirstAid - Booster Shot" );
-            }
+            btnSkill2.setText( player.getSkillSlot2().toString() );
+            btnSkill2.setToolTipText( player.getSkillSlot2().skillDescription() );
             btnSkill2.setEnabled( true );
         }
         else
@@ -504,6 +529,17 @@ public class CombatGUI
     private void updateHealthBar()
     {
         healthBar.setValue( player.getPlayerHealthPoint().getHealthPoint() );
+        if ( healthBar.getValue() == healthBar.getMaximum() )
+        {
+            btnUseMedkit.setEnabled( false );
+        }
+        else
+        {
+            if ( Integer.valueOf( txtMedkitNumber.getText() ) != 0 )
+            {
+                btnUseMedkit.setEnabled( true );
+            }
+        }
     }
 
     private void updateMedkitNumber()
@@ -511,14 +547,38 @@ public class CombatGUI
         txtMedkitNumber.setText( String.valueOf( player.getPlayerHealthPoint().getMedkitNumber() ) );
     }
 
-    public void perMoveAction()
+    private void isPlayerDead()
     {
-        updateSkillStatus();
-        updateExpBar();
-        updateHealthBar();
-        updateTargetBox();
-        updateTxtExpPoint();
-        updateMedkitNumber();
+        if ( player.getHealthPoint().isDead() )
+        {
+            JOptionPane.showConfirmDialog( null , "You have lost conscious, backing to safe area" , null , JOptionPane.DEFAULT_OPTION );
+            sceneControl = null ;
+            SafeAreaGUI safeAreaGUI = new SafeAreaGUI();
+            safeAreaGUI.main( null );
+            frame.dispose();
+        }
     }
 
+    public void missionCleared()
+    {
+        JOptionPane.showConfirmDialog( null , "Mission cleared, backing to safe area" , null , JOptionPane.DEFAULT_OPTION );
+        sceneControl = null;
+        SafeAreaGUI safeAreaGUI = new SafeAreaGUI();
+        safeAreaGUI.main( null );
+        frame.dispose();
+    }
+
+    public void perMoveAction()
+    {
+        isPlayerDead();
+        if ( sceneControl.getBattleScene() != null )
+        {
+            updateSkillStatus();
+            updateExpBar();
+            updateHealthBar();
+            updateTargetBox();
+            updateTxtExpPoint();
+            updateMedkitNumber();
+        }
+    }
 }
