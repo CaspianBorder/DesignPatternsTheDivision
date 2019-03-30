@@ -10,8 +10,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 
-import static com.sun.deploy.uitoolkit.ToolkitStore.dispose;
-
 public class WelcomeGUI
 {
 
