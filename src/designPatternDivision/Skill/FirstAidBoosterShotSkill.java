@@ -10,7 +10,7 @@ public class FirstAidBoosterShotSkill extends FirstAidSkill
     boolean inComingDamage = false ;
     public FirstAidBoosterShotSkill()
     {
-        skillName = "FirstAid - Booster Shot Modification";
+        skillName = "FirstAid - Booster Shot";
         durationTime = 3;
         cooldownTime = 5;
     }

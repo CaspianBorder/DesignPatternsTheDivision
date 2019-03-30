@@ -16,7 +16,7 @@ public class Mob
     double shootPosibility;
     String mobColor;
     String mobType;
-    Mob mobInstance;
+//    static Mob mobInstance;
 
     DamageModule damageModule;
     HealthPoint healthPoint;
@@ -32,23 +32,23 @@ public class Mob
         setHealthPoint();
     }
 
-    public Mob getMobInstance()
-    {
-        Mob mobClone = null;
-        if ( mobInstance == null )
-        {
-            mobInstance = new Mob();
-        }
-        try
-        {
-            mobClone = (Mob) mobInstance.clone();
-        }
-        catch ( CloneNotSupportedException e )
-        {
-            e.printStackTrace();
-        }
-        return mobClone;
-    }
+//    public static Mob getMobInstance()
+//    {
+//        Mob mobClone = null;
+//        if ( mobInstance == null )
+//        {
+//            mobInstance = new Mob();
+//        }
+//        try
+//        {
+//            mobClone = (Mob) mobInstance.clone();
+//        }
+//        catch ( CloneNotSupportedException e )
+//        {
+//            e.printStackTrace();
+//        }
+//        return mobClone;
+//    }
 
     void setDamageModule()
     {

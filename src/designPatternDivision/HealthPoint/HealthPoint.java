@@ -32,4 +32,9 @@ public class HealthPoint
     {
         return healthPoint == 0 ? true : false;
     }
+
+    public int getFullHealthPoint()
+    {
+        return fullHealthPoint;
+    }
 }

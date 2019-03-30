@@ -13,6 +13,7 @@ public abstract class Scene
     public Scene ()
     {
         player = Player.getPlayerInstance();
+//        createScene();
     }
 
     public void createScene()

@@ -49,4 +49,9 @@ public class ExperienceBar
         playerLevel = 0;
         experiencePoint = 0;
     }
+
+    public int getEXPERIENCE_CAP()
+    {
+        return EXPERIENCE_CAP;
+    }
 }

@@ -3,10 +3,11 @@ package designPatternDivision.Damage;
 public class DamageModule
 {
     int basicDamage;
+    int shotFire;
 
     public DamageModule()
     {
-
+        shotFire = 1;
     }
 
     public DamageModule( int inputDamage )
@@ -16,11 +17,11 @@ public class DamageModule
 
     public int getDamage()
     {
-        return basicDamage;
+        return basicDamage * shotFire;
     }
 
     public int getShotFire()
     {
-        return 1;
+        return shotFire;
     }
 }

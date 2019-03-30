@@ -1,8 +1,8 @@
 package designPatternDivision.Scene;
 
 import designPatternDivision.Damage.DamageModule;
-import designPatternDivision.Damage.PlayerDamage;
 import designPatternDivision.Experience.Experience;
+import designPatternDivision.GUI.CombatGUI;
 import designPatternDivision.Mob.Mob;
 import designPatternDivision.Player;
 import designPatternDivision.Scene.NextMove.*;
@@ -18,9 +18,13 @@ public abstract class BattleScene extends Scene
     final double MOB_NO_SHOOTING_HIT_POSIBILITY = 0.5;
     boolean isFirstInfo = true;
     String firstInfo;
-    Player player = Player.getPlayerInstance();
-    PlayerDamage playerDamage;
+    CombatGUI combatGUI;
+    //    Player player = Player.getPlayerInstance();
     double playerHitPosibility;
+
+    public BattleScene()
+    {
+    }
 
     @Override
     void mobCreation()
@@ -47,6 +51,11 @@ public abstract class BattleScene extends Scene
 
     public boolean setPlayerNextMove( int selectMove , int target )
     {
+        if ( combatGUI == null )
+        {
+            combatGUI = CombatGUI.getCombatGUIInstance();
+        }
+
         NextMove nextMove;
         boolean targetDown = false;
 
@@ -57,6 +66,7 @@ public abstract class BattleScene extends Scene
             case 0:
             {
                 nextMove = new AttackNextMove( player );
+                setFirstInfo( "Attacking " + mobArrayList.get( target ).toString() );
                 break;
             }
             case 1:
@@ -80,7 +90,7 @@ public abstract class BattleScene extends Scene
             case 4:
             {
                 nextMove = new UseSkill2NextMove( player );
-                setFirstInfo( "Skill 2 used" + System.lineSeparator() + player.getSkillSlot1().toString() );
+                setFirstInfo( "Skill 2 used" + System.lineSeparator() + player.getSkillSlot2().toString() );
                 break;
             }
             default:
@@ -88,7 +98,7 @@ public abstract class BattleScene extends Scene
                 nextMove = new NoMovementNextMove( player );
             }
         }
-        if ( nextMove instanceof AttackNextMove )
+        if ( selectMove == 0 )
         {
             playerHitPosibility = PLAYER_SHOOTING_HIT_POSIBILITY;
             targetDown = player2MobDamage( nextMove.executeNextMove() , target );
@@ -102,6 +112,9 @@ public abstract class BattleScene extends Scene
             playerHitPosibility = PLAYER_NO_SHOOTING_HIT_POSIBILITY;
             nextMove.executeNextMove();
         }
+        mob2PlayerDamage();
+        combatGUI.perMoveAction();
+        combatGUI.appendMsg( getInfo() );
         return targetDown;
     }
 
@@ -111,6 +124,7 @@ public abstract class BattleScene extends Scene
         int finalDamage = 0;
         int hitPoint = 0;
         Random random = new Random();
+        double randomValue;
 
         if ( mobArrayList.get( target ).getShootingState() )
         {
@@ -123,13 +137,14 @@ public abstract class BattleScene extends Scene
 
         for ( int i = 0 ; i < damageModule.getShotFire() ; i++ )
         {
-            if ( random.nextDouble() <= hitPosibility )
+            randomValue = random.nextDouble();
+            if ( randomValue <= hitPosibility )
             {
                 hitPoint++;
-                finalDamage += damageModule.getDamage();
+//                finalDamage += damageModule.getDamage();
             }
         }
-        finalDamage = ( hitPoint / damageModule.getShotFire() ) * damageModule.getDamage();
+        finalDamage = (int) ( ( (double) hitPoint / damageModule.getShotFire() ) * damageModule.getDamage() );
 
         setFirstInfo( "Dealing " + finalDamage + " damage to " + mobArrayList.get( target ).toString() );
         if ( mobArrayList.get( target ).getHealthPoint().getDamaged( finalDamage ) )
@@ -157,12 +172,14 @@ public abstract class BattleScene extends Scene
         double hitPosibility;
         int finalDamage = 0;
         Random random = new Random();
+        double randomValue;
 
         for ( int i = 0 ; i < mobArrayList.size() ; i++ )
         {
             if ( mobArrayList.get( i ).getShootingState() )
             {
-                if ( random.nextDouble() < playerHitPosibility )
+                randomValue = random.nextDouble();
+                if ( randomValue < playerHitPosibility )
                 {
                     finalDamage += mobArrayList.get( i ).getDamageModule().getDamage();
                 }
@@ -186,7 +203,7 @@ public abstract class BattleScene extends Scene
     public void setFirstInfo( String firstInfo )
     {
         isFirstInfo = true;
-        this.firstInfo = firstInfo;
+        this.firstInfo += System.lineSeparator() + firstInfo;
     }
 
     @Override
@@ -197,6 +214,7 @@ public abstract class BattleScene extends Scene
         {
             stringBuilder.append( firstInfo );
             stringBuilder.append( System.lineSeparator() );
+            firstInfo = "";
             isFirstInfo = false;
         }
         for ( int i = 0 ; i < mobArrayList.size() ; i++ )
@@ -205,5 +223,15 @@ public abstract class BattleScene extends Scene
             stringBuilder.append( System.lineSeparator() );
         }
         return stringBuilder.toString();
+    }
+
+    public ArrayList<String> getMobList()
+    {
+        ArrayList<String> mobList = new ArrayList<>();
+        for ( int i = 0 ; i < mobArrayList.size() ; i++ )
+        {
+            mobList.add( mobArrayList.get( i ).toString() );
+        }
+        return mobList;
     }
 }

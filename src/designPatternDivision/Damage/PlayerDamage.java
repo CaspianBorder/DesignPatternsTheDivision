@@ -2,8 +2,6 @@ package designPatternDivision.Damage;
 
 public class PlayerDamage extends DamageModule
 {
-    int shotFire;
-
     public PlayerDamage (int inputDamage)
     {
         super(inputDamage);
@@ -19,11 +17,5 @@ public class PlayerDamage extends DamageModule
     public int getShotFire()
     {
         return shotFire;
-    }
-
-    @Override
-    public int getDamage()
-    {
-        return super.getDamage() * shotFire;
     }
 }

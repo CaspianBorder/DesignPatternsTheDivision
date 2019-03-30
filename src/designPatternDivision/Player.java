@@ -18,6 +18,7 @@ public class Player
 {
     private static final int PLAYER_INITIAL_FULL_HEALTH = 3000;
     private volatile static Player player;
+    private volatile static boolean isInit = false;
     private Weapon weaponSlot1;
     private Weapon weaponSlot2;
     private SkillUnlock skillUnlock;
@@ -34,17 +35,24 @@ public class Player
         experienceBar = new ExperienceBar();
         weaponStashCollection = new WeaponStashCollection();
         weaponStashCollection.acquireWeapon( setInitWeapon() );
+        //debug
+        skillUnlock = new SkillUnlock( true , false , true , true );
+        weaponSlot1 = new StandardWeaponFactory().createWeapon( "LightweightM4" );
+        weaponSlot2 = new StandardWeaponFactory().createWeapon( "FirstWaveM1A" );
+        currentSlot = 1;
+        experienceBar = new ExperienceBar( 30 , 1 );
     }
 
     public static Player getPlayerInstance()
     {
-        if ( player == null )
+        if ( isInit == false )
         {
             synchronized ( Player.class )
             {
-                if ( player == null )
+                if ( isInit == false )
                 {
                     player = new Player();
+                    isInit = true;
                 }
             }
         }
@@ -97,10 +105,21 @@ public class Player
         return weaponSlot2;
     }
 
-    public void setWeaponSlot( int input )
+    public int getCurrentSlot()
     {
-        currentSlot = input;
-        return;
+        return currentSlot;
+    }
+
+    public void switchWeapon()
+    {
+        if ( getCurrentSlot() == 1 )
+        {
+            currentSlot = 2 ;
+        }
+        else
+        {
+            currentSlot = 1;
+        }
     }
 
     public Skill getSkillSlot1()

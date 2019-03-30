@@ -19,8 +19,8 @@ public class SkillUnlock
     {
         pulseLevel1 = input1;
         pulseLevel2 = input2;
-        firstAidLevel1 = input1;
-        firstAidLevel2 = input2;
+        firstAidLevel1 = input3;
+        firstAidLevel2 = input4;
     }
 
     public boolean isPulseLevel1()

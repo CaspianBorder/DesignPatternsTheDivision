@@ -7,7 +7,7 @@ public abstract class Skill
 {
     String skillName;
     boolean isActive = false;
-    boolean isReady = false;
+    boolean isReady = true;
     boolean inComingDamage = false;
     int durationTime;
     int durationLeft = 0;
@@ -59,12 +59,17 @@ public abstract class Skill
         return isActive;
     }
 
+    public boolean isReady()
+    {
+        return isReady;
+    }
+
     public DamageModule useSkill( DamageModule damageModule )
     {
         return damageModule;
     }
 
-    public HealthPoint useSkill( HealthPoint healthPoint)
+    public HealthPoint useSkill( HealthPoint healthPoint )
     {
         return healthPoint;
     }
@@ -74,5 +79,27 @@ public abstract class Skill
     public void setInComingDamage()
     {
         inComingDamage = true;
+    }
+
+    public String getStatus()
+    {
+        if ( isActive )
+        {
+            return skillName + System.lineSeparator() + "Active , " + durationLeft + " move left";
+        }
+        else if ( isReady == false )
+        {
+            return skillName + System.lineSeparator() + "Cooldown , " + cooldownLeft + " move left";
+        }
+        else
+        {
+            return skillName;
+        }
+    }
+
+    @Override
+    public String toString()
+    {
+        return getStatus();
     }
 }

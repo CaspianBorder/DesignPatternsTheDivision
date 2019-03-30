@@ -5,7 +5,7 @@ import designPatternDivision.Mob.Mob;
 public class NormalBattleScene extends BattleScene
 {
     final int INITIAL_MOB_NUMBER = 3;
-    int mobNumber;
+    int mobNumber = INITIAL_MOB_NUMBER;
 
     public NormalBattleScene()
     {
@@ -15,6 +15,7 @@ public class NormalBattleScene extends BattleScene
     public NormalBattleScene( int inputMobNumber )
     {
         mobNumber = inputMobNumber;
+        super.createScene();
     }
 
     @Override

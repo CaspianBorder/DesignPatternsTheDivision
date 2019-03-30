@@ -1,5 +1,6 @@
 package designPatternDivision.Scene;
 
+import designPatternDivision.GUI.CombatGUI;
 import designPatternDivision.Player;
 
 public class SceneControl
@@ -30,12 +31,15 @@ public class SceneControl
                 if ( missionDifficulty < 2 )
                 {
                     battleScene = new NormalBattleScene( 3 + missionDifficulty );
-                    battleScene.setFirstInfo("Stage");
+                    battleScene.setFirstInfo("Stage Clear , move to next stage" + System.lineSeparator() + "Stage " + currentStage + " / " + missionStage );
                 }
                 else
                 {
                     battleScene = new HardBattleScene( 4 + missionDifficulty - 2 );
                 }
+                CombatGUI combatGUI = CombatGUI.getCombatGUIInstance();
+                combatGUI.appendMsg( battleScene.getInfo() );
+                combatGUI.perMoveAction();
             }
             return battleScene;
         }
